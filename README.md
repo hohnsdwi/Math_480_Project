@@ -1,5 +1,5 @@
 Collaborators: 
-	Tanner Missler
+	Tanor Missler
 	Dwight Hohnstein
 	Jessica Junk
 
