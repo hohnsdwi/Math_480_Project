@@ -1,9 +1,11 @@
 Collaborators: 
 	Tanner Missler
 	Dwight Hohnstein
+	Jessica Junk
 
-Project Idea 1:
+Project:
 	Clean up documentation for all modules under sage/logic and add it to the reference manual. 
+	This includes mostly to changing the adhoc documentation to the required Sphinx format.
 	Related ticket numbers are as follows:
 	#8790 - 
 		Missing documentation:
@@ -31,6 +33,3 @@ Project Idea 1:
 		Clean up documentation for logic/logicparser.py
 	#8795 - 
 		Clean up documentation for logic/logictable.py
-
-Project Idea 2: 
-	Do something with encryption. Currently unsure what that would be. 
