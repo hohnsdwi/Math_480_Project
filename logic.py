@@ -1,5 +1,4 @@
 r"""
-LogicParser
 
 Manipulation of symbolic logic expressions.
 
