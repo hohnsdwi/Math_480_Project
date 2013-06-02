@@ -1,5 +1,4 @@
 r"""
-
 Manipulation of symbolic logic expressions.
 
 An expression is created from a string that consists of the
