@@ -1,4 +1,6 @@
 r"""
+Logic
+
 Manipulation of symbolic logic expressions.
 
 An expression is created from a string that consists of the
@@ -34,9 +36,8 @@ vars_order = []
 
 class SymbolicLogic:
     """
-
-    EXAMPLES::
-
+	EXAMPLES::
+	
         sage: log = SymbolicLogic()
         sage: s = log.statement("a&b|!(c|a)")
         sage: t = log.truthtable(s)
@@ -61,26 +62,29 @@ class SymbolicLogic:
 		
         - ``self`` -- the calling object.
         - ``s`` -- a string containing the logic expression to be manipulated.
-        - ``global vars`` -- a dictionary with the variable names and
-							  their current boolean value.
-        - ``global vars_order`` -- a list of the variable names in
-									the order they were found.
-        OUTPUT:
+        - ``global vars`` -- a dictionary with the variable names and their current boolean value.
+        - ``global vars_order`` -- a list of the variable names in the order they were found.
+        
+		OUTPUT:
 
-            Returns a list containing the following: 
-			
-			1. A list of tokens
-			2. A dictionary of varaiable/value pairs (where the value is 'True' or 'False')
-            3. List of the variable names in the order they were found
+		Returns a list containing the following: 
+		
+		1. A list of tokens
+		2. A dictionary of varaiable/value pairs (where the value is 'True' or 'False')
+		3. List of the variable names in the order they were found
 
-        EXAMPLES::
+        EXAMPLES:
 
-        This example illustrates the creation of a statement.::
+        This example illustrates the creation of a statement.
+		
+		::
 		
             sage: log = SymbolicLogic()
             sage: s = log.statement("a&b|!(c|a)")
 
-        We can now create another statement.::
+        We can now create another statement.
+		
+		::
 		
             sage: s2 = log.statement("!((!(a&b)))")
 
@@ -96,7 +100,6 @@ class SymbolicLogic:
             Malformed Statement
             sage: s = log.statement("a&((b)")
             Malformed Statement
-
         """
         global vars, vars_order
         toks, vars, vars_order = ['OPAREN'], {}, []
@@ -118,34 +121,38 @@ class SymbolicLogic:
 
         - ``self`` -- the calling object: not used.
         - ``statement`` -- a list of 3 items, the tokens and two global
-						   variables vars and vars_order.
+		  variables vars and vars_order.
         - ``start`` -- an integer representing the row of the truth
-					   table from which to start initialized to 0 which
-					   is the first row when all the variables are
-					   false.
+		  table from which to start initialized to 0 which
+		  is the first row when all the variables are
+		  false.
         - ``end`` -- an integer representing the last row of the
-					 truthtable to be created initialized to -1 which
-					 if left is converted to the last row of the
-					 full table.
+		  truthtable to be created initialized to -1 which
+		  if left is converted to the last row of the
+		  full table.
         - ``global vars`` -- a dictionary with the variable names and
-							 their current boolean value.
+		  their current boolean value.
         - ``global vars_order`` -- a list of the variable names in
-								   the order they were found.
+		  the order they were found.
 
         OUTPUT:
 
-            Returns the truthtable (a 2-d array with the creating statement
-            tacked on the front) corresponding to the statement.
+		- Returns the truthtable (a 2-d array with the creating statement
+		  tacked on the front) corresponding to the statement.
 
-        EXAMPLES::
+        EXAMPLES:
 
-        This example illustrates the creation of a statement.::
+        This example illustrates the creation of a statement.
+		
+		::
 		
             sage: log = SymbolicLogic()
             sage: s = log.statement("a&b|!(c|a)")
             sage: t = log.truthtable(s) #creates the whole truth table
 
-        We can now create truthtable of rows 1 to 5.::
+        We can now create truthtable of rows 1 to 5.
+		
+		::
 		
             sage: s2 = log.truthtable(s, 1, 5); s2
             [[['OPAREN', 'a', 'AND', 'b', 'OR', 'NOT', 'OPAREN', 'c', 'OR', 'a', 'CPAREN', 'CPAREN'], {'a': 'False', 'c': 'True', 'b': 'False'}, ['a', 'b', 'c']], ['False', 'False', 'True', 'False'], ['False', 'True', 'False', 'True'], ['False', 'True', 'True', 'True'], ['True', 'False', 'False', 'False']] 
@@ -154,11 +161,11 @@ class SymbolicLogic:
         There should be no errors if the statement did not return
         any errors.
 
-        .. NOTE:
+        .. NOTE::
 		
-            When sent with no start or end parameters this is an
-            exponential time function requiring `O(2^n)` time, where
-            `n` is the number of variables in the logic expression.
+	    	When sent with no start or end parameters this is an
+		    exponential time function requiring `O(2^n)` time, where
+		    `n` is the number of variables in the logic expression.
         """
         global vars, vars_order
         toks, vars, vars_order = statement
@@ -188,19 +195,21 @@ class SymbolicLogic:
 
         - ``self`` -- the calling object: not used.
         - ``table`` -- an object created by :meth:`truthtable`
-					   that contains variable values and the
-					   corresponding evaluation of the statement.
+		   that contains variable values and the
+		   corresponding evaluation of the statement.
         - ``global vars_order`` -- a list of the variable names in
-								   the order they were found.
+   	      the order they were found.
 
         OUTPUT:
 
-            Prints to the terminal window a formatted version of
-            the truthtable (which is basically a 2-d array).
+		- Prints to the terminal window a formatted version of
+		  the truthtable (which is basically a 2-d array).
 
-        EXAMPLES::
+        EXAMPLES:
 
-        This example illustrates the creation of a statement.::
+        This example illustrates the creation of a statement.
+		
+		::
 		
             sage: log = SymbolicLogic()
             sage: s = log.statement("a&b|!(c|a)")
@@ -217,7 +226,9 @@ class SymbolicLogic:
             True  | True  | False | True  |
             True  | True  | True  | True  |
 
-        We can also print a shortened table.::
+        We can also print a shortened table.
+		
+		::
 		
             sage: t = log.truthtable(s, 1, 5)
             sage: log.print_table(t)
@@ -230,7 +241,6 @@ class SymbolicLogic:
 
         There should be no errors if the statement did not return
         any errors.
-
         """
         statement = table[0]
         del table[0]
@@ -265,31 +275,34 @@ class SymbolicLogic:
                 i += 1
             print line
         print
-
-    #.. TODO::
-	#		
-	#		implement the combine function which returns
-    #		two statements or'd together
-    
+ 
 	def combine(self, statement1, statement2):
-        x = 0
-
-    #.. TODO::
-	#		
-	#		implement the simplify function which calls
-    #		a c++ implementation of the ESPRESSO algorithm
-    #		to simplify the truthtable: probably Minilog
+        r"""
+		.. TODO::
+			
+			implement the combine function which returns
+    		two statements or'd together	
+		"""
+		x = 0
 	
     def simplify(self, table):
+		r"""
+		.. TODO::
+			
+			implement the simplify function which calls
+    		a c++ implementation of the ESPRESSO algorithm
+    		to simplify the truthtable: probably Minilog
+		"""
         x = 0
 
-    #.. TODO:: 
-	#
-	#		implement a prove function which test to
-    #		see if the statement is a tautology or contradiction
-    #		by calling a c++ library TBD
-	
     def prove(self, statement):
+		r"""
+		.. TODO:: 
+	
+			implement a prove function which test to
+    		see if the statement is a tautology or contradiction
+    		by calling a c++ library TBD
+		"""
         x = 0
 
 def get_bit(x, c):
@@ -301,12 +314,12 @@ def get_bit(x, c):
 
         - ``x`` -- An integer, the number from which to take the bit.
         - ``c`` -- An integer, the bit number to be taken, where 0 is
-				   the low order bit.
+	      the low order bit.
 
         OUTPUT:
 
-            Returns ``True`` if bit ``c`` of number ``x`` is ``1``, ``False``
-			otherwise.
+		- Returns ``True`` if bit ``c`` of number ``x`` is ``1``, ``False``
+		  otherwise.
     """
     bits = []
     while(x > 0):
@@ -333,9 +346,9 @@ def eval(toks):
         - ``toks`` -- a token list representing a logic expression.
 
         OUTPUT:
-
-            Returns ``True`` if evaluates to ``True`` with variables
-			in vars and ``False`` otherwise.
+		
+		- Returns ``True`` if evaluates to ``True`` with variables
+		  in vars and ``False`` otherwise.
     """
     stack = []
     for tok in toks:
@@ -360,12 +373,12 @@ def eval_ltor_toks(lrtoks):
         INPUT:
 
         - ``lrtoks`` -- a token list representing part of a logical
-						expression that contains no inner parentheses.
+		  expression that contains no inner parentheses.
 
         OUTPUT:
 
-            Returns ``True`` if evaluates to ``True`` with variables
-			in vars and ``False`` otherwise.
+		- Returns ``True`` if evaluates to ``True`` with variables
+		  in vars and ``False`` otherwise.
     """
     reduce_monos(lrtoks)        #monotonic ``!`` operators go first
     reduce_bins(lrtoks)         #then the binary operators
@@ -382,13 +395,13 @@ def reduce_bins(lrtoks):
         INPUT:
 
         - ``lrtoks`` -- a token list representing part of a logical
-						expression that contains no inner parentheses
-						or monotonic operators.
+		  expression that contains no inner parentheses
+		  or monotonic operators.
 
         OUTPUT:
 
-            The pointer to lrtoks is now a list containing ``True`` or
-            ``False``.
+		- The pointer to lrtoks is now a list containing ``True`` or
+		  ``False``.
     """
     i = 0
     while(i < len(lrtoks)):
@@ -409,12 +422,12 @@ def reduce_monos(lrtoks):
         INPUT:
 
         - ``lrtoks`` -- a token list representing part of a logical
-						expression that contains no inner parentheses.
+		  expression that contains no inner parentheses.
 
         OUTPUT:
 
-            The pointer to lrtoks is now a list containing no monotonic
-            operators.
+		- The pointer to ``lrtoks`` is now a list containing no monotonic
+		  operators.
     """
     i = 0
     while(i < len(lrtoks)):
@@ -433,14 +446,14 @@ def eval_mon_op(args):
         INPUT:
 
         - ``args`` -- a list of length 2 containing the token 'NOT' and
-					  then a variable name.
+		  then a variable name.
         - ``global vars`` -- a dictionary with the variable names and
-							 their current boolean value.
+		  their current boolean value.
 
         OUTPUT:
 
-            Returns the inverse of the boolean value represented by the
-            variable.
+		- Returns the inverse of the boolean value represented by the
+		  variable.
     """
     if(args[1] != 'True' and args[1] != 'False'):
         val = vars[args[1]]
@@ -461,15 +474,15 @@ def eval_bin_op(args):
         INPUT:
 
         - ``args`` -- a list of length 3 to containing a variable name
-					  then a token representing a binary logical operator
-					  then another variable name.
+		  then a token representing a binary logical operator
+		  then another variable name.
         - ``global vars`` -- a dictionary with the variable names and
-							 their current boolean value.
+		  their current boolean value.
 
         OUTPUT:
 
-            Returns the boolean evaluation of the operator based on
-            the values of the variables.
+		- Returns the boolean evaluation of the operator based on
+		  the values of the variables.
     """
     if(args[0] == 'False'):
         lval = 'False'
@@ -502,13 +515,13 @@ def eval_and_op(lval, rval):
         INPUT:
 
         - ``lval`` -- the variable name appearing to the left of the
-					  ``and`` operator.
+		  ``and`` operator.
         - ``rval`` -- the variable name appearing to the right of the
-					  ``and`` operator.
+		  ``and`` operator.
 
         OUTPUT:
 
-            Returns the logical ``and`` operator applied to lval and rval.
+		- Returns the logical ``and`` operator applied to ``lval`` and ``rval``.
     """
     if(lval == 'False' and rval == 'False'):
         return 'False'
@@ -527,13 +540,13 @@ def eval_or_op(lval, rval):
         INPUT:
 
         - ``lval`` -- the variable name appearing to the left of the
-					  ``or`` operator.
+		  ``or`` operator.
         - ``rval`` -- the variable name appearing to the right of the
-					  ``or`` operator.
+		  ``or`` operator.
 
         OUTPUT:
 
-            Returns the logical ``or`` operator applied to lval and rval.
+		- Returns the logical ``or`` operator applied to ``lval`` and ``rval``.
     """
     if(lval == 'False' and rval == 'False'):
         return 'False'
@@ -552,13 +565,13 @@ def eval_ifthen_op(lval, rval):
         INPUT:
 
         - ``lval`` -- the variable name appearing to the left of the
-					  ``if then`` operator.
+		  ``if then`` operator.
         - ``rval`` -- the variable name appearing to the right of the
-					  ``if then`` operator.
+		  ``if then`` operator.
 
         OUTPUT:
 
-            Returns the logical ``if then`` operator applied to lval and rval.
+		- Returns the logical ``if then`` operator applied to ``lval`` and ``rval``.
     """
     if(lval == 'False' and rval == 'False'):
         return 'True'
@@ -578,14 +591,14 @@ def eval_iff_op(lval, rval):
         INPUT:
 
         - ``lval`` -- the variable name appearing to the left of the
-					  ``if and only if`` operator.
+		  ``if and only if`` operator.
         - ``rval`` -- the variable name appearing to the right of the
-					  ``if and only if`` operator.
+		  ``if and only if`` operator.
 
         OUTPUT:
 
-            Returns the logical ``if and only if`` operator applied to
-			lval and rval.
+		- Returns the logical ``if and only if`` operator applied to
+		  ``lval`` and ``rval``.
     """
     if(lval == 'False' and rval == 'False'):
         return 'True'
@@ -606,13 +619,13 @@ def tokenize(s, toks):
         - ``s`` -- a string that contains a logical expression.
         - ``toks`` -- a list to contain the tokens of s.
         - ``global vars`` -- a dictionary with the variable names and
-							 their current boolean value.
+		  their current boolean value.
         - ``global vars_order`` -- a list of the variable names in
-								   the order they were found.
+	      the order they were found.
 
         OUTPUT:
 
-            The tokens are placed in toks.
+		- The tokens are placed in ``toks``.
     """
     i = 0
     while(i < len(s)):

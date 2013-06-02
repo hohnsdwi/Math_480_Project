@@ -1,4 +1,6 @@
 r"""
+LogicTable
+
 Module designed for the creation and printing of truth tables that are
 associated with a logical statement.  
 
@@ -36,6 +38,7 @@ values for a given statement, it is easy to find the value of a statement
 for arbitrary values of its variables.  
 
 EXAMPLES::
+
     sage: import sage.logic.propcalc as propcalc
     sage: s = propcalc.formula("a&b|~(c|a)")
     sage: s.truthtable() 
@@ -52,7 +55,10 @@ EXAMPLES::
     sage: latex(s.truthtable(5,11))
     \\\begin{tabular}{llll}c & b & a & value \\\hline True & False & True & False \\True & True & False & True \\True & True & True & True\end{tabular}
 
-It is not an error to use nonsensical numeric inputs::
+It is not an error to use nonsensical numeric inputs
+
+::
+
     sage: s = propcalc.formula("a&b|~(c|a)")   
     sage: s.truthtable(5, 9)
     a      b      c      value
@@ -63,7 +69,10 @@ It is not an error to use nonsensical numeric inputs::
     sage: s.truthtable(9, 5)
     a      b      c      value
 
-If one argument is provided, truthtable defaults to the end::
+If one argument is provided, truthtable defaults to the end
+
+::
+
     sage: s.truthtable(-1)
     a      b      c      value
     False  False  False  True
@@ -75,7 +84,10 @@ If one argument is provided, truthtable defaults to the end::
     True   True   False  True
     True   True   True   True
 
-If the second argument is negative, truthtable defaults to the end::
+If the second argument is negative, truthtable defaults to the end
+
+::
+
     sage: s.truthtable(4, -2)
     a      b      c      value
     True   False  False  False
@@ -84,6 +96,7 @@ If the second argument is negative, truthtable defaults to the end::
     True   True   True   True
 
 .. NOTE::
+
     For statements that contain a variable list that when printed is longer than
     the \latex page, the columns of the table will run off the screen.    
 """
@@ -108,9 +121,9 @@ class Truthtable:
 
         INPUT:
   	
-        - ''self'' -- the calling object.
-        - ''t'' -- a 2-D array containing the table values
-        - ''vo'' -- a list of the variables in the expression in order, 
+        - ``self`` -- the calling object.
+        - ``t`` -- a 2-D array containing the table values
+        - ``vo`` -- a list of the variables in the expression in order, 
           with each variable occurring only once.
                   
         OUTPUT:
@@ -118,9 +131,10 @@ class Truthtable:
         - Effectively returns an instance of this class.
 
         EXAMPLES:
+        
         This example illustrates the creation of a table.
 		
-		::
+	::
 		
             sage: import sage.logic.propcalc as propcalc
             sage: s = propcalc.formula("a&b|~(c|a)")
@@ -137,24 +151,25 @@ class Truthtable:
 
         .. NOTE:: 
 		
-		    There should be no errors.
+	    There should be no errors.
         """
         self.__table = t
         self.__vars_order = vo
 
     def _latex_(self):
         r"""
-        Returns a string representation of the calling table object.  
+        Returns a string representation of the :class:`Truthtable`.  
         
         INPUT:
 		
-        - ''self'' -- the calling object.
+        - ``self`` -- the calling object.
 
         OUTPUT:
 		
         - Returns the \latex representation of this table.
  
         EXAMPLES::
+        
             sage: import sage.logic.propcalc as propcalc
             sage: s = propcalc.formula("man->monkey&human")
             sage: latex(s.truthtable())
@@ -185,17 +200,18 @@ class Truthtable:
 
     def __repr__(self):
         r"""
-        This function returns a string representation of the calling table object.
+        This function returns a string representation of :class:`Truthtable`.
 
         INPUT:
 		
-        - ''self'' -- the calling object: not used.
+        - ``self`` -- the calling object: not used.
          
         OUTPUT:
 		
         - Returns a string representation of this table.
 
         EXAMPLES::
+		
             sage: import sage.logic.propcalc as propcalc
             sage: s = propcalc.formula("man->monkey&human")
             sage: s.truthtable()
@@ -214,7 +230,7 @@ class Truthtable:
 		    Strange parameters can lead to the table header with no body.
             sage: s.truthtable(2, 1)
             man    monkey  human  value
-
+			
         There should be no errors.
         """        
         vars_len = []
@@ -247,22 +263,22 @@ class Truthtable:
 
     def get_table_list(self):
         r"""
-        This function returns a string representation of the calling table object.
+        This function returns a string representation of the calling :class:`Truthtable`.
 
         INPUT:
             
-		- ''self'' -- the calling object: not used.
+		- ``self`` -- the calling object: not used.
          
         OUTPUT:
 		
         - Returns the list representation of this table.
 
         EXAMPLES::
+		
             sage: import sage.logic.propcalc as propcalc
             sage: s = propcalc.formula("man->monkey&human")
             sage: s.truthtable().get_table_list()
-             [['man', 'monkey', 'human'], [False, False, False, True], [False, False, True, True], [False, True, False, True], [False, True, True, True], [True, False, False, False], [True, False, True, False], [True, True, False, False], [True, True, True, True]]
-
+            [['man', 'monkey', 'human'], [False, False, False, True], [False, False, True, True], [False, True, False, True], [False, True, True, True], [True, False, False, False], [True, False, True, False], [True, True, False, False], [True, True, True, True]]
         """        
         t = self.__table[:]
         t.insert(0, self.__vars_order)
