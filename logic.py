@@ -320,6 +320,11 @@ def get_bit(x, c):
 
 		- Returns ``True`` if bit ``c`` of number ``x`` is ``1``, ``False``
 		  otherwise.
+		  
+	    EXAMPLES::
+		
+			sage: sage.logic.logic.get_bit(0,0)
+			False
     """
     bits = []
     while(x > 0):
@@ -349,6 +354,15 @@ def eval(toks):
 		
 		- Returns ``True`` if evaluates to ``True`` with variables
 		  in vars and ``False`` otherwise.
+		  
+		EXAMPLES::
+		
+			sage: a=true
+			sage: b=false
+			sage: c=true
+			sage: d=true
+			sage: eval("(a&b)|(c&d)")
+			True
     """
     stack = []
     for tok in toks:
@@ -379,6 +393,22 @@ def eval_ltor_toks(lrtoks):
 
 		- Returns ``True`` if evaluates to ``True`` with variables
 		  in vars and ``False`` otherwise.
+		  
+		EXAMPLES::
+		
+			sage: a=true
+			sage: b=false
+			sage: c=true
+			sage: d=true
+			sage: log=SymbolicLogic()
+			sage: s=log.statement("a&b&c&d")
+			sage: eval("(a&b)|(c&d)")
+			sage: g=[]
+			sage: for i in range (len(s[0])-1):
+			sage: 	if i != 0:
+			sage: 		g.append(s[0][i])	  
+			sage: sage.logic.logic.eval_ltor_toks(g)
+			'False'
     """
     reduce_monos(lrtoks)        #monotonic ``!`` operators go first
     reduce_bins(lrtoks)         #then the binary operators
@@ -402,6 +432,13 @@ def reduce_bins(lrtoks):
 
 		- The pointer to lrtoks is now a list containing ``True`` or
 		  ``False``.
+		
+		EXAMPLES::
+		
+			sage: g=['True','AND','False']
+			sage: sage.logic.logic.reduce_bins(g)
+			sage: g
+			['False']
     """
     i = 0
     while(i < len(lrtoks)):
@@ -428,6 +465,14 @@ def reduce_monos(lrtoks):
 
 		- The pointer to ``lrtoks`` is now a list containing no monotonic
 		  operators.
+		
+		EXAMPLES::
+		
+		sage: b='True'
+		sage: g=['NOT',b]
+		sage: sage.logic.logic.reduce_monos(g)
+		sage: g
+		['False']
     """
     i = 0
     while(i < len(lrtoks)):
@@ -453,7 +498,13 @@ def eval_mon_op(args):
         OUTPUT:
 
 		- Returns the inverse of the boolean value represented by the
-		  variable.
+		variable.
+		
+		EXAMPLES::
+		
+			sage: a=false
+			sage: sage.logic.logic.eval_mon_op(['NOT','a'])
+			'True'
     """
     if(args[1] != 'True' and args[1] != 'False'):
         val = vars[args[1]]
@@ -483,6 +534,13 @@ def eval_bin_op(args):
 
 		- Returns the boolean evaluation of the operator based on
 		  the values of the variables.
+		  
+	    EXAMPLES::
+		
+			sage: a=false
+			sage: b=true
+			sage: sage.logic.logic.eval_bin_op(['a','AND','b'])
+			'False'
     """
     if(args[0] == 'False'):
         lval = 'False'
@@ -522,6 +580,11 @@ def eval_and_op(lval, rval):
         OUTPUT:
 
 		- Returns the logical ``and`` operator applied to ``lval`` and ``rval``.
+		
+		EXAMPLES::
+		
+			sage: sage.logic.logic.eval_and_op('True', 'True')
+			'True'
     """
     if(lval == 'False' and rval == 'False'):
         return 'False'
@@ -547,6 +610,11 @@ def eval_or_op(lval, rval):
         OUTPUT:
 
 		- Returns the logical ``or`` operator applied to ``lval`` and ``rval``.
+		
+		EXAMPLES::
+		
+			sage: sage.logic.logic.eval_or_op('False', 'True')
+			'True'
     """
     if(lval == 'False' and rval == 'False'):
         return 'False'
@@ -572,12 +640,17 @@ def eval_ifthen_op(lval, rval):
         OUTPUT:
 
 		- Returns the logical ``if then`` operator applied to ``lval`` and ``rval``.
+		
+		EXAMPLES::
+		
+			sage: sage.logic.logic.eval_ifthen_op('True', 'False')
+			'False'
     """
     if(lval == 'False' and rval == 'False'):
         return 'True'
     elif(lval == 'False' and rval == 'True'):
         return 'True'
-    elif(lval == 'True' and rval == 'False'):
+    elif(lval == 'True' and rval == 'False'):b
         return 'False'
     elif(lval == 'True' and rval == 'True'):
         return 'True'
@@ -599,6 +672,11 @@ def eval_iff_op(lval, rval):
 
 		- Returns the logical ``if and only if`` operator applied to
 		  ``lval`` and ``rval``.
+		  
+		EXAMPLES::
+		
+			sage: sage.logic.logic.eval_iff_op('False', 'False')
+			'True'
     """
     if(lval == 'False' and rval == 'False'):
         return 'True'
@@ -626,6 +704,14 @@ def tokenize(s, toks):
         OUTPUT:
 
 		- The tokens are placed in ``toks``.
+		
+		EXAMPLES::
+			
+			sage: g="(a&b)|(!c)"
+			sage: toks=['OPAREN']
+			sage: sage.logic.logic.tokenize(g, toks)
+			sage: toks
+			['OPAREN', 'OPAREN', 'a', 'AND', 'b', 'CPAREN', 'OR', 'OPAREN', 'NOT', 'c', 'CPAREN', 'CPAREN']
     """
     i = 0
     while(i < len(s)):
