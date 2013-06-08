@@ -112,12 +112,10 @@ If the second argument is negative, truthtable defaults to the end
 __table = []
 __vars_order = []
 
-class Truthtable:
-
-    def __init__(self, t, vo):
-        r"""
-        This function initializes the data fields and is called when a 
-        new table is created. 
+class TruthTable:
+	r"""
+        Creates a truth table defined by the 2-D array ``t`` and the list
+        of variables ``vo`` where each variable occurs only once.
 
         INPUT:
   	
@@ -153,12 +151,40 @@ class Truthtable:
 		
 	    There should be no errors.
         """
+    def __init__(self, t, vo):
+        r"""
+        This function initializes the data fields and is called when a 
+        new table is created. See ``TruthTable`` for full documentation.
+
+        EXAMPLES:
+        
+        This example illustrates the creation of a table.
+		
+	::
+		
+            sage: import sage.logic.propcalc as propcalc
+            sage: s = propcalc.formula("a&b|~(c|a)")
+            sage: s.truthtable() 
+            a      b      c      value
+            False  False  False  True
+            False  False  True   False
+            False  True   False  True
+            False  True   True   False
+            True   False  False  False
+            True   False  True   False
+            True   True   False  True
+            True   True   True   True
+
+        .. NOTE:: 
+		
+	    There should be no errors.
+        """
         self.__table = t
         self.__vars_order = vo
 
     def _latex_(self):
         r"""
-        Returns a string representation of the :class:`Truthtable`.  
+        Returns a `\LaTeX` representation of this table. 
         
         INPUT:
 		
@@ -166,7 +192,7 @@ class Truthtable:
 
         OUTPUT:
 		
-        - Returns the \latex representation of this table.
+        - Returns the `\LaTeX` representation of this table.
  
         EXAMPLES::
         
