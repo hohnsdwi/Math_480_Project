@@ -6,7 +6,7 @@ boolean formulas.
 
 AUTHORS:
 
-	- Chris Gorecki
+- Chris Gorecki
 
 EXAMPLES::
 
@@ -33,7 +33,7 @@ def parse(s):
             
     OUTPUT:
 	
-	- Returns the tuple (parse tree of ``s``, variables in ``s``).
+    - Returns the tuple (parse tree of ``s``, variables in ``s``).
     
     EXAMPLES::
 	
@@ -60,7 +60,7 @@ def tokenize(s):
             
     OUTPUT:        
 	
-	- Returns a tuple consisting of (tokens in ``s``, variables in ``s``).
+    - Returns a tuple consisting of (tokens in ``s``, variables in ``s``).
    
     EXAMPLES::
 	
@@ -129,7 +129,7 @@ def tree_parse(toks):
             
     OUTPUT:
 	
-	- Returns a parse tree of the tokens toks.
+    - Returns a parse tree of the tokens toks.
    
     EXAMPLES::
 	
@@ -156,13 +156,14 @@ def parse_ltor(toks, n = 0):
     the precondition that each token in ``toks`` is atomic.
     
     INPUT:
+    
     - ``toks`` -- a list of tokens.
     - ``n`` -- an integer representing which order of operations
 	  are occurring.
             
     OUTPUT:
 	
-	- Returns a parse tree of the tokens toks.
+    - Returns a parse tree of the tokens toks.
    
     EXAMPLES::
 	
@@ -208,8 +209,8 @@ def apply_func(tree, func):
     
     OUTPUT:
 	
-	- Returns a parse tree after func has been applied
-	  to it.
+    - Returns a parse tree after func has been applied
+      to it.
 
     EXAMPLES::
 	
@@ -231,6 +232,4 @@ def apply_func(tree, func):
     else:
         lval = tree[1]
         rval = tree[2]
-    return func([tree[0], lval, rval]) 
-
-    
+    return func([tree[0], lval, rval])
