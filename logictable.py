@@ -293,7 +293,7 @@ class TruthTable:
 
         INPUT:
             
-		- ``self`` -- the calling object: not used.
+	- ``self`` -- the calling object: not used.
          
         OUTPUT:
 		
