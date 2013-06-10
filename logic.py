@@ -88,17 +88,13 @@ class SymbolicLogic:
         
             sage: s2 = log.statement("!((!(a&b)))")
         
-        It is an error to use invalid variable names.
-		
-		::
+        It is an error to use invalid variable names::
         
             sage: s = log.statement("3fe & @q")
             Invalid variable name:  3fe
             Invalid variable name:  @q
         
-        It is an error to use invalid syntax.
-		
-		::
+        It is an error to use invalid syntax::
         
             sage: s = log.statement("a&&b")
             Malformed Statement
