@@ -154,7 +154,7 @@ class TruthTable:
     def __init__(self, t, vo):
         r"""
         This function initializes the data fields and is called when a 
-        new table is created. See ``TruthTable`` for full documentation.
+        new table is created. See :class:`TruthTable` for full documentation.
 
         EXAMPLES:
         
@@ -226,7 +226,7 @@ class TruthTable:
 
     def __repr__(self):
         r"""
-        This function returns a string representation of :class:`Truthtable`.
+        This function returns a string representation of :class:`TruthTable`.
 
         INPUT:
 		
@@ -289,7 +289,7 @@ class TruthTable:
 
     def get_table_list(self):
         r"""
-        This function returns a string representation of the calling :class:`Truthtable`.
+        This function returns a string representation of the calling :class:`TruthTable`.
 
         INPUT:
             
