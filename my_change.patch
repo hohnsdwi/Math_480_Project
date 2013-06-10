@@ -1,0 +1,17 @@
+# HG changeset patch
+# User hohnsdwi@uw.edu
+# Date 1369893251 25200
+#      Wed May 29 22:54:11 2013 -0700
+# Node ID d8c53abd308bcc4a0ef5b931afe2b05931576f62
+# Parent  1077314f416653b28e199c382667a1f11e444bdd
+Patched something silly to display hello world when commutative_ring called
+
+diff --git a/sage/rings/commutative_ring.py b/sage/rings/commutative_ring.py
+--- a/sage/rings/commutative_ring.py
++++ b/sage/rings/commutative_ring.py
+@@ -28,4 +28,5 @@
+         sage: sage.rings.commutative_ring.is_CommutativeRing(ZZ)
+         True
+     """
++    print('Hello world!')
+     return isinstance(R, CommutativeRing)

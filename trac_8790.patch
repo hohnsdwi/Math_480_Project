@@ -1,0 +1,1036 @@
+# HG changeset patch
+# User hohnsdwi@uw.edu
+# Date 1370889045 25200
+#      Mon Jun 10 11:30:45 2013 -0700
+# Node ID 683c8aec254113e20a38b25f90c52b366ced7de1
+# Parent  beeebf6ba08d9973bd4e504ae1f6c74a100f2cf8
+Implemented combine(statement1,statment2) and cleaned documentation
+
+diff --git a/sage/logic/logic.py b/sage/logic/logic.py
+--- a/sage/logic/logic.py
++++ b/sage/logic/logic.py
+@@ -88,17 +88,17 @@
+             
+                 sage: s2 = log.statement("!((!(a&b)))")
+             
+-            It is an error to use invalid variable names.
+-			
+-			::
++            It is an error to use invalid variable names
++            
++            ::
+             
+                 sage: s = log.statement("3fe & @q")
+                 Invalid variable name:  3fe
+                 Invalid variable name:  @q
++                
++            It is an error to use invalid syntax
+             
+-            It is an error to use invalid syntax.
+-			
+-			::
++            ::
+             
+                 sage: s = log.statement("a&&b")
+                 Malformed Statement
+@@ -125,19 +125,19 @@
+             
+             - ``self`` -- the calling object: not used.
+             - ``statement`` -- a list of 3 items, the tokens and two global
+-              variables vars and vars_order.
++            variables vars and vars_order.
+             - ``start`` -- an integer representing the row of the truth
+-              table from which to start initialized to 0 which
+-              is the first row when all the variables are
+-              false.
++            table from which to start initialized to 0 which
++            is the first row when all the variables are
++            false.
+             - ``end`` -- an integer representing the last row of the
+-              truthtable to be created initialized to -1 which
+-              if left is converted to the last row of the
+-              full table.
++            truthtable to be created initialized to -1 which
++            if left is converted to the last row of the
++            full table.
+             - ``global vars`` -- a dictionary with the variable names and
+-              their current boolean value.
++            their current boolean value.
+             - ``global vars_order`` -- a list of the variable names in
+-              the order they were found.
++            the order they were found.
+             
+             OUTPUT:
+             
+@@ -153,23 +153,23 @@
+                 sage: log = SymbolicLogic()
+                 sage: s = log.statement("a&b|!(c|a)")
+                 sage: t = log.truthtable(s) #creates the whole truth table
+-            
++                
+             We can now create truthtable of rows 1 to 5.
+             
+             ::
+-            
++                
+                 sage: s2 = log.truthtable(s, 1, 5); s2
+                 [[['OPAREN', 'a', 'AND', 'b', 'OR', 'NOT', 'OPAREN', 'c', 'OR', 'a', 'CPAREN', 'CPAREN'], {'a': 'False', 'c': 'True', 'b': 'False'}, ['a', 'b', 'c']], ['False', 'False', 'True', 'False'], ['False', 'True', 'False', 'True'], ['False', 'True', 'True', 'True'], ['True', 'False', 'False', 'False']]
+-            
++                
+             
+             There should be no errors if the statement did not return
+             any errors.
+             
+             .. NOTE::
+             
+-	    	When sent with no start or end parameters this is an
+-		    exponential time function requiring `O(2^n)` time, where
+-		    `n` is the number of variables in the logic expression.
++                When sent with no start or end parameters this is an
++                exponential time function requiring `O(2^n)` time, where
++                `n` is the number of variables in the logic expression.
+             """
+         global vars, vars_order
+         toks, vars, vars_order = statement
+@@ -189,7 +189,7 @@
+             row.append(eval(toks))
+             table.append(row)
+         return table
+-
++    
+     def print_table(self, table):
+         r"""
+             This function returns a truthtable corresponding to
+@@ -199,10 +199,10 @@
+             
+             - ``self`` -- the calling object: not used.
+             - ``table`` -- an object created by :meth:`truthtable`
+-              that contains variable values and the
+-              corresponding evaluation of the statement.
++            that contains variable values and the
++            corresponding evaluation of the statement.
+             - ``global vars_order`` -- a list of the variable names in
+-              the order they were found.
++            the order they were found.
+             
+             OUTPUT:
+             
+@@ -229,11 +229,11 @@
+                 True  | False | True  | False |
+                 True  | True  | False | True  |
+                 True  | True  | True  | True  |
+-            
++                
+             We can also print a shortened table.
+             
+             ::
+-            
++                
+                 sage: t = log.truthtable(s, 1, 5)
+                 sage: log.print_table(t)
+                 a     | b     | c     | value | value |
+@@ -242,7 +242,7 @@
+                 False | False | True  | False | False |
+                 False | False | True  | True  | False |
+                 False | True  | False | False | True  |
+-            
++                
+             There should be no errors if the statement did not return
+             any errors.
+             """
+@@ -289,12 +289,12 @@
+             INPUT:
+             
+             - ``self`` -- The calling object
+-            - ``statement1`` -- A logical expression, either a string or a 
+-              statement object from calling SymbolicLogic().statement("")
++            - ``statement1`` -- A logical expression, either a string or a
++            statement object from calling SymbolicLogic().statement("")
+             - ``statement2`` -- A logical expression, either a string or a
+-              statement object from calling SymbolicLogic().statement("")
++            statement object from calling SymbolicLogic().statement("")
+             
+-            OUTPUT: 
++            OUTPUT:
+             
+             - Returns a new ``statement`` object whose expression is
+             ``statement1`` and ``statement2`` combined using the operator 'OR'
+@@ -311,25 +311,25 @@
+                 sage: f=log.combine(s,d)
+                 sage: f
+                 [['OPAREN',
+-                  'OPAREN',
+-                  'a',
+-                  'AND',
+-                  'b',
+-                  'CPAREN',
+-                  'OR',
+-                  'OPAREN',
+-                  'c',
+-                  'AND',
+-                  'd',
+-                  'CPAREN',
+-                  'CPAREN'],
++                'OPAREN',
++                'a',
++                'AND',
++                'b',
++                'CPAREN',
++                'OR',
++                'OPAREN',
++                'c',
++                'AND',
++                'd',
++                'CPAREN',
++                'CPAREN'],
+                 {'a': 'False', 'b': 'False', 'c': 'False', 'd': 'False'},
+                 ['a', 'b', 'c', 'd']]
+             
+             We can also use a mix of strings and statement objects.
+             
+             ::
+-            
++                
+                 sage: log=SymbolicLogic()
+                 sage: s=log.statement("a&b")
+                 sage: f=log.combine(s,"c&d")
+@@ -381,21 +381,21 @@
+         else:
+             raise TypeError('Malformed Inputs, combine accepts only strings and statement objects')
+     def simplify(self, table):
+-		r"""
++        r"""
+             .. TODO::
+-			
+-			implement the simplify function which calls
+-    		a c++ implementation of the ESPRESSO algorithm
+-    		to simplify the truthtable: probably Minilog
++            
++                implement the simplify function which calls
++                a c++ implementation of the ESPRESSO algorithm
++                to simplify the truthtable: probably Minilog
+             """
+     
+     def prove(self, statement):
+-		r"""
++        r"""
+             .. TODO::
+             
+-			implement a prove function which test to
+-    		see if the statement is a tautology or contradiction
+-    		by calling a c++ library TBD
++                implement a prove function which test to
++                see if the statement is a tautology or contradiction
++                by calling a c++ library TBD
+             """
+ 
+ def get_bit(x, c):
+@@ -407,17 +407,17 @@
+         
+         - ``x`` -- An integer, the number from which to take the bit.
+         - ``c`` -- An integer, the bit number to be taken, where 0 is
+-          the low order bit.
++        the low order bit.
+         
+         OUTPUT:
+         
+-		- Returns ``True`` if bit ``c`` of number ``x`` is ``1``, ``False``
++        - Returns ``True`` if bit ``c`` of number ``x`` is ``1``, ``False``
+         otherwise.
+         
+         EXAMPLES::
+         
+-        sage: sage.logic.logic.get_bit(0,0)
+-        False
++            sage: sage.logic.logic.get_bit(0,0)
++            'False'
+         """
+     bits = []
+     while(x > 0):
+@@ -437,15 +437,15 @@
+         This function is for internal use by :class:`SymbolicLogic`.
+         It returns ``True`` if the expression contained in toks would
+         evaluate to ``True`` and ``False`` otherwise.  It relies on
+-		setting the values of the variables in the global dictionary vars.
++        setting the values of the variables in the global dictionary vars.
+         
+         INPUT:
+         
+         - ``toks`` -- a token list representing a logic expression.
+         
+         OUTPUT:
+-		
+-		- Returns ``True`` if evaluates to ``True`` with variables
++        
++        - Returns ``True`` if evaluates to ``True`` with variables
+         in vars and ``False`` otherwise.
+         
+         EXAMPLES::
+@@ -480,11 +480,11 @@
+         INPUT:
+         
+         - ``lrtoks`` -- a token list representing part of a logical
+-          expression that contains no inner parentheses.
++        expression that contains no inner parentheses.
+         
+         OUTPUT:
+         
+-		- Returns ``True`` if evaluates to ``True`` with variables
++        - Returns ``True`` if evaluates to ``True`` with variables
+         in vars and ``False`` otherwise.
+         
+         EXAMPLES::
+@@ -518,14 +518,14 @@
+         INPUT:
+         
+         - ``lrtoks`` -- a token list representing part of a logical
+-          expression that contains no inner parentheses
+-          or monotonic operators.
++        expression that contains no inner parentheses or
++        monotonic operators.
+         
+         OUTPUT:
+         
+-		- The pointer to lrtoks is now a list containing ``True`` or
++        - The pointer to lrtoks is now a list containing ``True`` or
+         ``False``.
+-		
++        
+         EXAMPLES::
+         
+             sage: g=['True','AND','False']
+@@ -552,15 +552,15 @@
+         INPUT:
+         
+         - ``lrtoks`` -- a token list representing part of a logical
+-          expression that contains no inner parentheses.
++        expression that contains no inner parentheses.
+         
+         OUTPUT:
+         
+-		- The pointer to ``lrtoks`` is now a list containing no monotonic
+-          operators.
+-		
++        - The pointer to ``lrtoks`` is now a list containing no monotonic
++        operators.
++        
+         EXAMPLES::
+-        
++            
+             sage: b='True'
+             sage: g=['NOT',b]
+             sage: sage.logic.logic.reduce_monos(g)
+@@ -584,15 +584,15 @@
+         INPUT:
+         
+         - ``args`` -- a list of length 2 containing the token 'NOT' and
+-          then a variable name.
++        then a variable name.
+         - ``global vars`` -- a dictionary with the variable names and
+-          their current boolean value.
++        their current boolean value.
+         
+         OUTPUT:
+         
+-		- Returns the inverse of the boolean value represented by the
+-		  variable.
+-		
++        - Returns the inverse of the boolean value represented by the
++        variable.
++        
+         EXAMPLES::
+         
+             sage: a=false
+@@ -618,14 +618,14 @@
+         INPUT:
+         
+         - ``args`` -- a list of length 3 to containing a variable name
+-          then a token representing a binary logical operator
+-          then another variable name.
++        then a token representing a binary logical operator
++        then another variable name.
+         - ``global vars`` -- a dictionary with the variable names and
+-          their current boolean value.
++        their current boolean value.
+         
+         OUTPUT:
+         
+-		- Returns the boolean evaluation of the operator based on
++        - Returns the boolean evaluation of the operator based on
+         the values of the variables.
+         
+         EXAMPLES::
+@@ -666,13 +666,13 @@
+         INPUT:
+         
+         - ``lval`` -- the variable name appearing to the left of the
+-          ``and`` operator.
++        ``and`` operator.
+         - ``rval`` -- the variable name appearing to the right of the
+-          ``and`` operator.
++        ``and`` operator.
+         
+         OUTPUT:
+         
+-		- Returns the logical ``and`` operator applied to ``lval`` and ``rval``.
++        - Returns the logical ``and`` operator applied to ``lval`` and ``rval``.
+         
+         EXAMPLES::
+         
+@@ -696,14 +696,14 @@
+         INPUT:
+         
+         - ``lval`` -- the variable name appearing to the left of the
+-          ``or`` operator.
++        ``or`` operator.
+         - ``rval`` -- the variable name appearing to the right of the
+-          ``or`` operator.
++        ``or`` operator.
+         
+         OUTPUT:
+         
+-		- Returns the logical ``or`` operator applied to ``lval`` and ``rval``.
+-		
++        - Returns the logical ``or`` operator applied to ``lval`` and ``rval``.
++        
+         EXAMPLES::
+         
+             sage: sage.logic.logic.eval_or_op('False', 'True')
+@@ -726,14 +726,14 @@
+         INPUT:
+         
+         - ``lval`` -- the variable name appearing to the left of the
+-          ``if then`` operator.
++        ``if then`` operator.
+         - ``rval`` -- the variable name appearing to the right of the
+-          ``if then`` operator.
++        ``if then`` operator.
+         
+         OUTPUT:
+         
+-		- Returns the logical ``if then`` operator applied to ``lval`` and ``rval``.
+-		
++        - Returns the logical ``if then`` operator applied to ``lval`` and ``rval``.
++        
+         EXAMPLES::
+         
+             sage: sage.logic.logic.eval_ifthen_op('True', 'False')
+@@ -752,18 +752,18 @@
+     r"""
+         This function is for internal use by :class:`SymbolicLogic`.
+         It returns the logical ``if and only if`` operator applied to
+-		lval and rval.
++        lval and rval.
+         
+         INPUT:
+         
+         - ``lval`` -- the variable name appearing to the left of the
+-          ``if and only if`` operator.
++        ``if and only if`` operator.
+         - ``rval`` -- the variable name appearing to the right of the
+-          ``if and only if`` operator.
++        ``if and only if`` operator.
+         
+         OUTPUT:
+         
+-		- Returns the logical ``if and only if`` operator applied to
++        - Returns the logical ``if and only if`` operator applied to
+         ``lval`` and ``rval``.
+         
+         EXAMPLES::
+@@ -790,21 +790,21 @@
+         - ``s`` -- a string that contains a logical expression.
+         - ``toks`` -- a list to contain the tokens of s.
+         - ``global vars`` -- a dictionary with the variable names and
+-          their current boolean value.
++        their current boolean value.
+         - ``global vars_order`` -- a list of the variable names in
+-          the order they were found.
++        the order they were found.
+         
+         OUTPUT:
+         
+-		- The tokens are placed in ``toks``.
+-		
++        - The tokens are placed in ``toks``.
++        
+         EXAMPLES::
+         
+-            sage: g="(a&b)|(!c)"
+-            sage: toks=['OPAREN']
+-            sage: sage.logic.logic.tokenize(g, toks)
+-            sage: toks
+-            ['OPAREN', 'OPAREN', 'a', 'AND', 'b', 'CPAREN', 'OR', 'OPAREN', 'NOT', 'c', 'CPAREN', 'CPAREN']
++        sage: g="(a&b)|(!c)"
++        sage: toks=['OPAREN']
++        sage: sage.logic.logic.tokenize(g, toks)
++        sage: toks
++        ['OPAREN', 'OPAREN', 'a', 'AND', 'b', 'CPAREN', 'OR', 'OPAREN', 'NOT', 'c', 'CPAREN', 'CPAREN']
+         """
+     i = 0
+     while(i < len(s)):
+@@ -845,7 +845,7 @@
+                 if(tok[0] not in string.letters):
+                     valid = 0
+                 for c in tok:
+-                    if(c not in string.letters and c not in string.digits 
++                    if(c not in string.letters and c not in string.digits
+                        and c != '_'):
+                         valid = 0
+             
+@@ -857,5 +857,5 @@
+             else:
+                 print 'Invalid variable name: ', tok
+                 toks = []
+-    
++                    
+     toks.append('CPAREN')
+diff --git a/sage/logic/logicparser.py b/sage/logic/logicparser.py
+--- a/sage/logic/logicparser.py
++++ b/sage/logic/logicparser.py
+@@ -1,15 +1,11 @@
+ r"""
+-LogicParser
+-
+-Module that creates and modifies parse trees of well formed 
++Module that creates and modifies parse trees of well formed
+ boolean formulas.
+ 
+ AUTHORS:
++    -- Chris Gorecki
+ 
+-	- Chris Gorecki
+-
+-EXAMPLES::
+-
++EXAMPLES:
+     sage: import sage.logic.logicparser as logicparser
+     sage: s = 'a|b&c'
+     sage: t = logicparser.parse(s)
+@@ -25,18 +21,15 @@
+ 
+ def parse(s):
+     r"""
+-    This function produces a parse tree from a boolean formula ``s``.
+-    
++    This function produces a parse tree from a boolean formula s.
++
+     INPUT:
+-	
+-    - ``s`` -- a string containing a boolean formula.
+-            
++        s -- a string containing a boolean formula.
++
+     OUTPUT:
+-	
+-	- Returns the tuple (parse tree of ``s``, variables in ``s``).
+-    
+-    EXAMPLES::
+-	
++        Returns the tuple (parse tree of s, variables in s).
++
++    EXAMPLES:
+         sage: import sage.logic.logicparser as logicparser
+         sage: s = 'a|b&c'
+         sage: t = logicparser.parse(s)
+@@ -48,34 +41,31 @@
+         #special case of tree == single variable
+     if(type(tree) is StringType and len([tree]) == 1):
+                 return ['&', tree, tree], vars_order
+-    return tree, vars_order    
++    return tree, vars_order
+ 
+ def tokenize(s):
+     r"""
+-    This function produces a string of tokens from ``s``.
+-    
++    This function produces a string of tokens from s.
++
+     INPUT:
+-	
+-    - ``s`` -- a string containing a boolean formula.
+-            
+-    OUTPUT:        
+-	
+-	- Returns a tuple consisting of (tokens in ``s``, variables in ``s``).
+-   
+-    EXAMPLES::
+-	
++        s -- a string containing a boolean formula.
++
++    OUTPUT:
++        Returns a tuple consisting of (tokens in s, variables in s).
++
++    EXAMPLES:
+         sage: import sage.logic.logicparser as logicparser
+         sage: s = 'a|b&c'
+         sage: t = logicparser.tokenize(s)
+         sage: t
+-        (['(', 'a', '|', 'b', '&', 'c', ')'], ['a', 'b', 'c'])        
++        (['(', 'a', '|', 'b', '&', 'c', ')'], ['a', 'b', 'c'])
+     """
+-    i = 0  
++    i = 0
+     toks = ['(']
+     vars_order = []
+-    
+-    while(i < len(s)):        
+-        tok = ""     
++
++    while(i < len(s)):
++        tok = ""
+         skip = valid = 1
+         if(s[i] in '()~&|^'):
+             tok = s[i]
+@@ -94,45 +84,42 @@
+             if(s[i] == ' '):
+                 i += 1
+                 continue
+-             
++
+             while(i < len(s) and s[i] not in __symbols and s[i] != ' '):
+                 tok += s[i]
+                 i += 1
+-             
++
+             if(len(tok) > 0):
+-                if(tok[0] not in string.letters): 
++                if(tok[0] not in string.letters):
+                     valid = 0
+                 for c in tok:
+                     if(c not in string.letters and c not in string.digits and c != '_'):
+                         valid = 0
+-                  
+-            if(valid == 1): 
++
++            if(valid == 1):
+                 toks.append(tok)
+                 if(tok not in vars_order):
+                     vars_order.append(tok)
+             else:
+                 msg = 'invalid variable name ' + tok
+                 msg += ": identifiers must begin with a letter and contain only "
+-                msg += "alphanumerics and underscores" 
++                msg += "alphanumerics and underscores"
+                 raise NameError, msg
+-        
++
+     toks.append(')')
+     return toks, vars_order
+ 
+ def tree_parse(toks):
+     r"""
+-    This function produces a parse tree from the tokens in ``toks``.
+-    
++    This function produces a parse tree from the tokens in toks.
++
+     INPUT:
+-	
+-    - ``toks`` -- a list of tokens.
+-            
++        toks -- a list of tokens.
++
+     OUTPUT:
+-	
+-	- Returns a parse tree of the tokens toks.
+-   
+-    EXAMPLES::
+-	
++        Returns a parse tree of the tokens toks.
++
++    EXAMPLES:
+         sage: import sage.logic.logicparser as logicparser
+         sage: t = ['(', 'a', '|', 'b', '&', 'c', ')']
+         sage: logicparser.tree_parse(t)
+@@ -145,34 +132,32 @@
+             lrtoks = []
+             while(tok != '('):
+                 tok = stack.pop()
+-                lrtoks.insert(0, tok) 
++                lrtoks.insert(0, tok)
+             branch = parse_ltor(lrtoks[1:-1])
+             stack.append(branch)
+-    return stack[0]     
+-        
++    return stack[0]
++
+ def parse_ltor(toks, n = 0):
+     r"""
+-    This function produces a parse tree from the tokens in ``toks`` under
+-    the precondition that each token in ``toks`` is atomic.
+-    
++    This function produces a parse tree from the tokens in toks under
++    the precondition that each token in toks is atomic.
++
+     INPUT:
+-    - ``toks`` -- a list of tokens.
+-    - ``n`` -- an integer representing which order of operations
+-	  are occurring.
+-            
++        toks -- a list of tokens.
++        n -- an integer representing which order of operations
++             are occurring.
++
+     OUTPUT:
+-	
+-	- Returns a parse tree of the tokens toks.
+-   
+-    EXAMPLES::
+-	
++        Returns a parse tree of the tokens toks.
++
++    EXAMPLES:
+         sage: import sage.logic.logicparser as logicparser
+         sage: t = ['a', '|', 'b', '&', 'c']
+         sage: logicparser.parse_ltor(t)
+         ['|', 'a', ['&', 'b', 'c']]
+     """
+     i = 0
+-    for tok in toks:        
++    for tok in toks:
+         if(tok == __op_list[n]):
+             if(tok == '~'):
+                 #cancel double negations
+@@ -186,33 +171,30 @@
+                 return parse_ltor(toks, n)
+             else:
+                 args = [toks[i - 1], toks[i], toks[i + 1]]
+-                toks[i - 1] = [args[1], args[0], args[2]]   
++                toks[i - 1] = [args[1], args[0], args[2]]
+                 del toks[i]
+                 del toks[i]
+                 return parse_ltor(toks, n)
+         i += 1
+-    if(n + 1 < len(__op_list)):        
++    if(n + 1 < len(__op_list)):
+         return parse_ltor(toks, n + 1)
+     if(len(toks) > 1):
+         raise SyntaxError
+-    return toks[0]    
++    return toks[0]
+ 
+ def apply_func(tree, func):
+     r"""
+-    This function applies ``func`` to each node of ``tree``.
++    This function applies func to each node of tree.
+ 
+     INPUT:
+-	
+-    - ``tree`` -- a parse tree.
+-    - ``func`` -- a function to be applied to tree.
+-    
++        tree -- a parse tree.
++        func -- a function to be applied to tree.
++
+     OUTPUT:
+-	
+-	- Returns a parse tree after func has been applied
+-	  to it.
++        Returns a parse tree after func has been applied
++        to it.
+ 
+-    EXAMPLES::
+-	
++    EXAMPLES:
+         sage: import sage.logic.logicparser as logicparser
+         sage: t = ['|', ['&', 'a', 'b'], ['&', 'a', 'c']]
+         sage: f = lambda t: t
+@@ -231,6 +213,5 @@
+     else:
+         lval = tree[1]
+         rval = tree[2]
+-    return func([tree[0], lval, rval]) 
++    return func([tree[0], lval, rval])
+ 
+-    
+\ No newline at end of file
+diff --git a/sage/logic/logictable.py b/sage/logic/logictable.py
+--- a/sage/logic/logictable.py
++++ b/sage/logic/logictable.py
+@@ -1,18 +1,16 @@
+ r"""
+-LogicTable
+-
+ Module designed for the creation and printing of truth tables that are
+-associated with a logical statement.  
++associated with a logical statement.
+ 
+ A logic table is essentially a 2-D array that is created by the statement class
+-and stored in the private global variable table, along with a list containing 
+-the variable names to be used, in order.  
++and stored in the private global variable table, along with a list containing
++the variable names to be used, in order.
+ 
+ The order in which the table is listed essentially amounts to counting in binary.
+ For instance, with the variables A, B, and C the truth table looks like:
+ 
+ A      B      C      value
+-False  False  False    ?  
++False  False  False    ?
+ False  False  True     ?
+ False  True   False    ?
+ False  True   True     ?
+@@ -35,13 +33,12 @@
+ 
+ Given that a table can be created corresponding to any range of acceptable
+ values for a given statement, it is easy to find the value of a statement
+-for arbitrary values of its variables.  
++for arbitrary values of its variables.
+ 
+-EXAMPLES::
+-
++EXAMPLES:
+     sage: import sage.logic.propcalc as propcalc
+     sage: s = propcalc.formula("a&b|~(c|a)")
+-    sage: s.truthtable() 
++    sage: s.truthtable()
+     a      b      c      value
+     False  False  False  True
+     False  False  True   False
+@@ -55,24 +52,18 @@
+     sage: latex(s.truthtable(5,11))
+     \\\begin{tabular}{llll}c & b & a & value \\\hline True & False & True & False \\True & True & False & True \\True & True & True & True\end{tabular}
+ 
+-It is not an error to use nonsensical numeric inputs
+-
+-::
+-
+-    sage: s = propcalc.formula("a&b|~(c|a)")   
++It is not an error to use nonsensical numeric inputs.
++    sage: s = propcalc.formula("a&b|~(c|a)")
+     sage: s.truthtable(5, 9)
+     a      b      c      value
+-    True   False  True   False  
+-    True   True   False  True   
+-    True   True   True   True   
++    True   False  True   False
++    True   True   False  True
++    True   True   True   True
+ 
+     sage: s.truthtable(9, 5)
+     a      b      c      value
+ 
+-If one argument is provided, truthtable defaults to the end
+-
+-::
+-
++If one argument is provided, truthtable defaults to the end.
+     sage: s.truthtable(-1)
+     a      b      c      value
+     False  False  False  True
+@@ -84,10 +75,7 @@
+     True   True   False  True
+     True   True   True   True
+ 
+-If the second argument is negative, truthtable defaults to the end
+-
+-::
+-
++If the second argument is negative, truthtable defaults to the end.
+     sage: s.truthtable(4, -2)
+     a      b      c      value
+     True   False  False  False
+@@ -95,10 +83,9 @@
+     True   True   False  True
+     True   True   True   True
+ 
+-.. NOTE::
+-
++NOTES:
+     For statements that contain a variable list that when printed is longer than
+-    the \latex page, the columns of the table will run off the screen.    
++    the \latex page, the columns of the table will run off the screen.
+ """
+ #*************************************************************************************
+ # Copyright (C) 2006 William Stein <wstein@gmail.com>
+@@ -116,29 +103,23 @@
+ 
+     def __init__(self, t, vo):
+         r"""
+-        This function initializes the data fields and is called when a 
+-        new table is created. 
++        This function initializes the data fields and is called when a
++        new table is created.
+ 
+         INPUT:
+-  	
+-        - ``self`` -- the calling object.
+-        - ``t`` -- a 2-D array containing the table values
+-        - ``vo`` -- a list of the variables in the expression in order, 
+-          with each variable occurring only once.
+-                  
++            self -- the calling object.
++            t -- a 2-D array containing the table values
++            vo -- a list of the variables in the expression in order,
++                  with each variable occurring only once.
++
+         OUTPUT:
+-		
+-        - Effectively returns an instance of this class.
++            Effectively returns an instance of this class.
+ 
+         EXAMPLES:
+-        
+         This example illustrates the creation of a table.
+-		
+-	::
+-		
+             sage: import sage.logic.propcalc as propcalc
+             sage: s = propcalc.formula("a&b|~(c|a)")
+-            sage: s.truthtable() 
++            sage: s.truthtable()
+             a      b      c      value
+             False  False  False  True
+             False  False  True   False
+@@ -149,44 +130,37 @@
+             True   True   False  True
+             True   True   True   True
+ 
+-        .. NOTE:: 
+-		
+-	    There should be no errors.
++        There should be no errors.
+         """
+         self.__table = t
+         self.__vars_order = vo
+ 
+     def _latex_(self):
+         r"""
+-        Returns a string representation of the :class:`Truthtable`.  
+-        
++        Returns a string representation of the calling table object.
++
+         INPUT:
+-		
+-        - ``self`` -- the calling object.
++            self -- the calling object.
+ 
+         OUTPUT:
+-		
+-        - Returns the \latex representation of this table.
+- 
+-        EXAMPLES::
+-        
++            Returns the \latex representation of this table.
++
++        EXAMPLES:
+             sage: import sage.logic.propcalc as propcalc
+             sage: s = propcalc.formula("man->monkey&human")
+             sage: latex(s.truthtable())
+             \\\begin{tabular}{llll}human & monkey & man & value \\\hline False & False & False & True \\False & False & True & True \\False & True & False & True \\False & True & True & True \\True & False & False & False \\True & False & True & False \\True & True & False & False \\True & True & True & True\end{tabular}
+-            
+-        .. NOTE::
+-		
+-		    Strange parameters can lead to the table header with no body.
++
++        Strange parameters can lead to a table header with no body.
+             sage: latex(s.truthtable(2, 1))
+             \\\begin{tabular}{llll}human & monkey & man & value \\\hli\end{tabular}
+         """
+         vars_len = []
+         rt = s = ""
+         self.__vars_order.reverse()
+-        s = r'\\\begin{tabular}{' 
++        s = r'\\\begin{tabular}{'
+         s += 'l' * (len(self.__vars_order) + 1) + '}'
+-        for var in self.__vars_order: 
++        for var in self.__vars_order:
+             s += var + ' & '
+         rt += s + r'value \\' + r'\hline '
+         for row in self.__table:
+@@ -200,18 +174,15 @@
+ 
+     def __repr__(self):
+         r"""
+-        This function returns a string representation of :class:`Truthtable`.
++        This function returns a string representation of the calling table object.
+ 
+         INPUT:
+-		
+-        - ``self`` -- the calling object: not used.
+-         
++            self -- the calling object: not used.
++
+         OUTPUT:
+-		
+-        - Returns a string representation of this table.
++            Returns a string representation of this table.
+ 
+-        EXAMPLES::
+-		
++        EXAMPLES:
+             sage: import sage.logic.propcalc as propcalc
+             sage: s = propcalc.formula("man->monkey&human")
+             sage: s.truthtable()
+@@ -223,16 +194,14 @@
+             True   False   False  False
+             True   False   True   False
+             True   True    False  False
+-            True   True    True   True 
+-            
+-        .. NOTE::
+-		
+-		    Strange parameters can lead to the table header with no body.
++            True   True    True   True
++
++        Strange parameters can lead to the table header with no body.
+             sage: s.truthtable(2, 1)
+             man    monkey  human  value
+-			
++
+         There should be no errors.
+-        """        
++        """
+         vars_len = []
+         line = rt = s = ""
+         for var in self.__vars_order:
+@@ -241,7 +210,7 @@
+             while(len(s) < len('False ')):
+                 s += ' '
+             s += ' '
+-            line += s  
++            line += s
+         rt += line + 'value\n'
+         for row in self.__table:
+             line = s = ""
+@@ -255,7 +224,7 @@
+                 if(i < len(vars_len)):
+                     while(len(s) <= vars_len[i]):
+                         s += ' '
+-                s += ' ' 
++                s += ' '
+                 line += s
+                 i += 1
+             rt += line + '\n'
+@@ -263,23 +232,21 @@
+ 
+     def get_table_list(self):
+         r"""
+-        This function returns a string representation of the calling :class:`Truthtable`.
++        This function returns a string representation of the calling table object.
+ 
+         INPUT:
+-            
+-		- ``self`` -- the calling object: not used.
+-         
++            self -- the calling object: not used.
++
+         OUTPUT:
+-		
+-        - Returns the list representation of this table.
++            Returns the list representation of this table.
+ 
+-        EXAMPLES::
+-		
++        EXAMPLES:
+             sage: import sage.logic.propcalc as propcalc
+             sage: s = propcalc.formula("man->monkey&human")
+             sage: s.truthtable().get_table_list()
+-            [['man', 'monkey', 'human'], [False, False, False, True], [False, False, True, True], [False, True, False, True], [False, True, True, True], [True, False, False, False], [True, False, True, False], [True, True, False, False], [True, True, True, True]]
+-        """        
++             [['man', 'monkey', 'human'], [False, False, False, True], [False, False, True, True], [False, True, False, True], [False, True, True, True], [True, False, False, False], [True, False, True, False], [True, True, False, False], [True, True, True, True]]
++
++        """
+         t = self.__table[:]
+         t.insert(0, self.__vars_order)
+         return t
