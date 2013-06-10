@@ -163,9 +163,9 @@ class SymbolicLogic:
         
         .. NOTE::
         
-    	When sent with no start or end parameters this is an
-	    exponential time function requiring `O(2^n)` time, where
-	    `n` is the number of variables in the logic expression.
+            When sent with no start or end parameters this is an
+            exponential time function requiring `O(2^n)` time, where
+            `n` is the number of variables in the logic expression.
         """
         global vars, vars_order
         toks, vars, vars_order = statement
@@ -377,21 +377,21 @@ class SymbolicLogic:
         else:
             raise TypeError('Malformed Inputs, combine accepts only strings and statement objects')
     def simplify(self, table):
-		r"""
+        r"""
         .. TODO::
 		
-			implement the simplify function which calls
-			a c++ implementation of the ESPRESSO algorithm
-			to simplify the truthtable: probably Minilog
+            implement the simplify function which calls
+            a c++ implementation of the ESPRESSO algorithm
+            to simplify the truthtable: probably Minilog
         """
     
     def prove(self, statement):
-		r"""
+        r"""
         .. TODO::
         
-			implement a prove function which test to
-    		see if the statement is a tautology or contradiction
-    		by calling a c++ library TBD
+            implement a prove function which test to
+            see if the statement is a tautology or contradiction
+            by calling a c++ library TBD
         """
 
 def get_bit(x, c):
@@ -407,7 +407,7 @@ def get_bit(x, c):
     
     OUTPUT:
     
-	- Returns ``True`` if bit ``c`` of number ``x`` is ``1``, ``False``
+    - Returns ``True`` if bit ``c`` of number ``x`` is ``1``, ``False``
       otherwise.
     
     EXAMPLES::
@@ -433,7 +433,7 @@ def eval(toks):
     This function is for internal use by :class:`SymbolicLogic`.
     It returns ``True`` if the expression contained in toks would
     evaluate to ``True`` and ``False`` otherwise.  It relies on
-	setting the values of the variables in the global dictionary vars.
+    setting the values of the variables in the global dictionary vars.
     
     INPUT:
     
@@ -441,7 +441,7 @@ def eval(toks):
     
     OUTPUT:
 	
-	- Returns ``True`` if evaluates to ``True`` with variables
+    - Returns ``True`` if evaluates to ``True`` with variables
       in vars and ``False`` otherwise.
     
     EXAMPLES::
@@ -480,7 +480,7 @@ def eval_ltor_toks(lrtoks):
     
     OUTPUT:
     
-	- Returns ``True`` if evaluates to ``True`` with variables
+    - Returns ``True`` if evaluates to ``True`` with variables
       in vars and ``False`` otherwise.
     
     EXAMPLES::
@@ -519,7 +519,7 @@ def reduce_bins(lrtoks):
     
     OUTPUT:
     
-	- The pointer to lrtoks is now a list containing ``True`` or
+    - The pointer to lrtoks is now a list containing ``True`` or
       ``False``.
 	
     EXAMPLES::
@@ -552,7 +552,7 @@ def reduce_monos(lrtoks):
     
     OUTPUT:
     
-	- The pointer to ``lrtoks`` is now a list containing no monotonic
+    - The pointer to ``lrtoks`` is now a list containing no monotonic
       operators.
 	
     EXAMPLES::
@@ -586,8 +586,8 @@ def eval_mon_op(args):
     
     OUTPUT:
     
-	- Returns the inverse of the boolean value represented by the
-	  variable.
+    - Returns the inverse of the boolean value represented by the
+      variable.
 	
     EXAMPLES::
     
@@ -621,7 +621,7 @@ def eval_bin_op(args):
     
     OUTPUT:
     
-	- Returns the boolean evaluation of the operator based on
+    - Returns the boolean evaluation of the operator based on
       the values of the variables.
     
     EXAMPLES::
@@ -668,7 +668,7 @@ def eval_and_op(lval, rval):
     
     OUTPUT:
     
-	- Returns the logical ``and`` operator applied to ``lval`` and ``rval``.
+    - Returns the logical ``and`` operator applied to ``lval`` and ``rval``.
     
     EXAMPLES::
     
@@ -698,7 +698,7 @@ def eval_or_op(lval, rval):
     
     OUTPUT:
     
-	- Returns the logical ``or`` operator applied to ``lval`` and ``rval``.
+    - Returns the logical ``or`` operator applied to ``lval`` and ``rval``.
 	
     EXAMPLES::
     
@@ -728,7 +728,7 @@ def eval_ifthen_op(lval, rval):
     
     OUTPUT:
     
-	- Returns the logical ``if then`` operator applied to ``lval`` and ``rval``.
+    - Returns the logical ``if then`` operator applied to ``lval`` and ``rval``.
 	
     EXAMPLES::
     
@@ -759,7 +759,7 @@ def eval_iff_op(lval, rval):
     
     OUTPUT:
     
-	- Returns the logical ``if and only if`` operator applied to
+    - Returns the logical ``if and only if`` operator applied to
       ``lval`` and ``rval``.
     
     EXAMPLES::
@@ -792,7 +792,7 @@ def tokenize(s, toks):
     
     OUTPUT:
     
-	- The tokens are placed in ``toks``.
+    - The tokens are placed in ``toks``.
 	
     EXAMPLES::
     
