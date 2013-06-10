@@ -412,8 +412,8 @@ def get_bit(x, c):
     
     EXAMPLES::
     
-    sage: sage.logic.logic.get_bit(0,0)
-    False
+        sage: sage.logic.logic.get_bit(0,0)
+        'False'
     """
     bits = []
     while(x > 0):
