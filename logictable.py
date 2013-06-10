@@ -113,7 +113,7 @@ __table = []
 __vars_order = []
 
 class TruthTable:
-	r"""
+        r"""
         Creates a truth table defined by the 2-D array ``t`` and the list
         of variables ``vo`` where each variable occurs only once.
 
@@ -132,7 +132,7 @@ class TruthTable:
         
         This example illustrates the creation of a table.
 		
-	::
+        ::
 		
             sage: import sage.logic.propcalc as propcalc
             sage: s = propcalc.formula("a&b|~(c|a)")
@@ -149,7 +149,7 @@ class TruthTable:
 
         .. NOTE:: 
 		
-	    There should be no errors.
+            There should be no errors.
         """
     def __init__(self, t, vo):
         r"""
@@ -160,7 +160,7 @@ class TruthTable:
         
         This example illustrates the creation of a table.
 		
-	::
+        ::
 		
             sage: import sage.logic.propcalc as propcalc
             sage: s = propcalc.formula("a&b|~(c|a)")
@@ -177,7 +177,7 @@ class TruthTable:
 
         .. NOTE:: 
 		
-	    There should be no errors.
+            There should be no errors.
         """
         self.__table = t
         self.__vars_order = vo
@@ -203,7 +203,7 @@ class TruthTable:
             
         .. NOTE::
 		
-		    Strange parameters can lead to the table header with no body.
+            Strange parameters can lead to the table header with no body.
             sage: latex(s.truthtable(2, 1))
             \\\begin{tabular}{llll}human & monkey & man & value \\\hli\end{tabular}
         """
@@ -253,7 +253,7 @@ class TruthTable:
             
         .. NOTE::
 		
-		    Strange parameters can lead to the table header with no body.
+            Strange parameters can lead to the table header with no body.
             sage: s.truthtable(2, 1)
             man    monkey  human  value
 			
@@ -293,7 +293,7 @@ class TruthTable:
 
         INPUT:
             
-	- ``self`` -- the calling object: not used.
+        - ``self`` -- the calling object: not used.
          
         OUTPUT:
 		
