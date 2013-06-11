@@ -1,20 +1,20 @@
 r"""
-    Logic
-    
-    Manipulation of symbolic logic expressions.
-    
-    An expression is created from a string that consists of the
-    operators ``!``, ``&``, ``|``, ``->``, ``<->``, which
-    correspond to the logical functions ``not``, ``and``, ``or``,
-    ``if then``, ``if and only if``, respectively. Variable names
-    must start with a letter and contain only alpha-numerics and
-    the underscore character.
-    
-    AUTHORS:
-    
-    - Chris Gorecki (2007): initial version
-    - William Stein (2007-08-31): integration into SAGE-2.8.4
-    """
+Logic
+
+Manipulation of symbolic logic expressions.
+
+An expression is created from a string that consists of the
+operators ``!``, ``&``, ``|``, ``->``, ``<->``, which
+correspond to the logical functions ``not``, ``and``, ``or``,
+``if then``, ``if and only if``, respectively. Variable names
+must start with a letter and contain only alpha-numerics and
+the underscore character.
+
+AUTHORS:
+
+- Chris Gorecki (2007): initial version
+- William Stein (2007-08-31): integration into SAGE-2.8.4
+"""
 
 #*****************************************************************************
 # Copyright (C) 2006 William Stein <wstein@gmail.com>
